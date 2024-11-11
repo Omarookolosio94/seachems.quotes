@@ -4,12 +4,8 @@ import { FiAlignJustify } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
 import avatar from "assets/img/avatars/avatar4.png";
-import useUserStore from "core/services/stores/useUserStore";
-import useShopStore from "core/services/stores/useShopStore";
-import useSaleStore from "core/services/stores/useSaleStore";
-import useProductStore from "core/services/stores/useProductStore";
-import useCategoryStore from "core/services/stores/useCategoryStore";
-import useCatalogStore from "core/services/stores/useCatalogStore";
+import { useBusinessStore } from "core/services/stores/useBusinessStore";
+import { useCategoryStore } from "core/services/stores/useCategoryStore";
 
 const Navbar = (props: {
   onOpenSidenav: () => void;
@@ -19,23 +15,17 @@ const Navbar = (props: {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
   const navigate = useNavigate();
-  const user = useUserStore((state) => state.user);
-  const resetUser = useUserStore((state) => state.reset);
-  const resetShop = useShopStore((state) => state.reset);
-  const resetSale = useSaleStore((state) => state.reset);
-  const resetProduct = useProductStore((state) => state.reset);
-  const resetCategory = useCategoryStore((state) => state.reset);
-  const resetCatalog = useCatalogStore((state) => state.reset);
+  const resetBiz = useBusinessStore((store) => store.reset);
+  const resetCategory = useCategoryStore((store) => store.reset);
+  const user = useBusinessStore((store) => store.authData);
 
   const logout = () => {
-    resetUser();
-    resetShop();
-    resetSale();
-    resetProduct();
+    resetBiz();
     resetCategory();
-    resetCatalog();
+
     localStorage.removeItem("token");
     localStorage.clear();
+
     navigate("/auth/sign-in");
   };
 
@@ -98,8 +88,8 @@ const Navbar = (props: {
           button={
             <img
               className="h-10 w-10 rounded-full"
-              src={user?.logo[0]?.url ?? avatar}
-              alt="user"
+              src={avatar}
+              alt={user.name}
             />
           }
           children={

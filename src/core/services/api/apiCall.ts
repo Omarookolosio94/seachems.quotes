@@ -19,7 +19,7 @@ export const apiCall = async ({
   method: string;
   body?: any;
   pQuery?: any;
-  param?: string;
+  param?: string | number;
   multipart?: boolean;
   responseType?: any;
   auth?: boolean;

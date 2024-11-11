@@ -60,7 +60,10 @@ export const useBusinessStore = create<State>()(
             localStorage.setItem("token", res?.data?.token);
             toast.success(res?.message);
           } else {
-            set({ isLoading: false });
+            set({
+              errors: res?.data,
+              isLoading: false,
+            });
             toast.error(res?.message);
           }
           return res;
@@ -68,6 +71,12 @@ export const useBusinessStore = create<State>()(
         register: async (request) => {
           set({ isLoading: true });
           var res: UIResponse = await RegisterBusiness(request);
+
+          if (!res.status) {
+            set({
+              errors: res?.data,
+            });
+          }
 
           res.status ? toast.success(res?.message) : toast.error(res?.message);
           set({ isLoading: false });
@@ -87,6 +96,9 @@ export const useBusinessStore = create<State>()(
           set({ isLoading: true });
 
           var res: UIResponse = await ResetPassword(request);
+          if (!res?.status) {
+            set({ errors: res?.data });
+          }
           res.status ? toast.success(res?.message) : toast.error(res?.message);
           set({ isLoading: false });
           return res;
@@ -102,8 +114,20 @@ export const useBusinessStore = create<State>()(
         updateProfile: async (profile) => {
           set({ isLoading: true });
           var res: UIResponse = await UpdateBusinessProfile(profile);
+
           if (res?.status) {
-            set({ profile: res?.data });
+            toast.success(res?.message);
+            set((state) => ({
+              ...state,
+              profile: res?.data,
+              authData: {
+                ...state.authData,
+                name: res?.data?.name,
+              },
+            }));
+          } else {
+            toast.error(res?.message);
+            set({ errors: res?.data });
           }
           set({ isLoading: false });
           return res;

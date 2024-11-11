@@ -7,17 +7,7 @@ const Footer = () => {
         </p>
       </h5>
       <div>
-        <ul className="flex flex-wrap items-center gap-3 sm:flex-nowrap md:gap-10">
-          <li>
-            <a
-              target="blank"
-              href="mailto:omarookolosio94@gmail.com"
-              className="text-base font-medium text-gray-600 hover:text-gray-600"
-            >
-              Support
-            </a>
-          </li>
-        </ul>
+        <ul className="flex flex-wrap items-center gap-3 sm:flex-nowrap md:gap-10"></ul>
       </div>
     </div>
   );

@@ -60,11 +60,11 @@ const InputField = forwardRef<HTMLInputElement, Props>(function Input(
         />
 
         {type === "password" && (
-          <div className="absolute right-3 top-[30%] hover:cursor-pointer">
+          <div className="absolute right-3 top-[10%] hover:cursor-pointer">
             {inputType === "password" ? (
               <button
                 type="button"
-                className="bg-brand text-secondary hover:bg-primary h-[20px] w-[60px] rounded-[8px] text-[12px]"
+                className="text-secondary h-10 w-[60px] rounded-[8px] text-[12px]"
                 onClick={() => setInputType("text")}
               >
                 Show
@@ -72,7 +72,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(function Input(
             ) : (
               <button
                 type="button"
-                className="bg-brand text-secondary hover:bg-primary h-10 w-[60px] rounded-md text-[12px]"
+                className="text-secondary h-10 w-[60px] rounded-md text-[12px]"
                 onClick={() => setInputType("password")}
               >
                 Hide
@@ -105,7 +105,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(function Input(
 
       <div className="h-2">
         {error && (
-          <span className="text-red text-[12px] leading-none">{error}</span>
+          <span className="text-[12px] leading-none text-red-500">{error}</span>
         )}
       </div>
     </fieldset>

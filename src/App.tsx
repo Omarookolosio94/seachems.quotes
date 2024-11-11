@@ -11,6 +11,7 @@ import AuthLayout from "layouts/auth";
 import { Toaster } from "react-hot-toast";
 import Loader from "core/components/loader/Loader";
 import { useBusinessStore } from "core/services/stores/useBusinessStore";
+import { useCategoryStore } from "core/services/stores/useCategoryStore";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -22,10 +23,11 @@ const App = () => {
   });
 
   const isBizLoading = useBusinessStore((store) => store.isLoading);
+  const categoryLoading = useCategoryStore((store) => store.isLoading);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isBizLoading && <Loader />}
+      {(isBizLoading || categoryLoading) && <Loader />}
       <Router>
         <Toaster />
 

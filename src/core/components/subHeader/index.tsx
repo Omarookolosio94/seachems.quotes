@@ -57,9 +57,6 @@ export default function SubHeader(props: {
           <div className="hide-print">
             <InputField
               label={searchLabel}
-              extra=""
-              variant="auth"
-              showLabel={false}
               id="search"
               type={searchType}
               name="search"

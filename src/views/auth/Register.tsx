@@ -25,16 +25,16 @@ export default function Register() {
 
   const registerBusiness = async (e: any) => {
     e.preventDefault();
-    var status: boolean | any = await register(registerForm);
+    var res: UIResponse = await register(registerForm);
 
-    if (status) {
+    if (res?.status) {
       setRegisterForm({
         name: "",
         email: "",
         password: "",
       });
       // sessionStorage.setItem("email", registerForm?.email);
-      navigate("/auth/verify");
+      navigate("/auth");
     }
   };
 

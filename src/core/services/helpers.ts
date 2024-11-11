@@ -116,7 +116,7 @@ export const getDate = (
   return formattedDate;
 };
 
-export const expandRow = (uniqueId: string, expandedRows: any) => {
+export const expandRow = (uniqueId: string | number, expandedRows: any) => {
   const currentExpandedRows: any = expandedRows;
   const isRowExpanded: any = currentExpandedRows.includes(uniqueId);
   const obj: any = {};

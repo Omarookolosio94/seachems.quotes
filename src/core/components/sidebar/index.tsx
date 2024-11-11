@@ -2,15 +2,14 @@
 import { HiX } from "react-icons/hi";
 import Links from "./components/Links";
 import routes from "routes";
-import useUserStore from "core/services/stores/useUserStore";
+import { useBusinessStore } from "core/services/stores/useBusinessStore";
 
 const Sidebar = (props: {
   open: boolean;
   onClose: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   const { open, onClose } = props;
-  const user = useUserStore((state) => state.user);
-  const isEmployer = useUserStore((state) => state.isEmployer);
+  const name = useBusinessStore((state) => state.authData.name);
 
   return (
     <div
@@ -27,23 +26,14 @@ const Sidebar = (props: {
 
       <div className={`mx-[56px] mt-[48px] flex w-[160px] items-center`}>
         <div className="ml-1 mt-1 h-auto font-poppins text-[18px] font-bold uppercase text-navy-700 dark:text-white">
-          <span>{isEmployer ? user?.name : user?.employer?.name}</span>
+          <span>{name}</span>
         </div>
       </div>
       <div className="mb-7 mt-[58px] h-px bg-gray-300 dark:bg-white/30" />
       {/* Nav item */}
 
       <ul className="mb-auto pt-1">
-        {isEmployer ? (
-          <Links routes={routes} />
-        ) : (
-          <Links
-            routes={routes.filter(
-              (route: any) =>
-                route.name != "Analytics" && route.name != "Archive"
-            )}
-          />
-        )}
+        <Links routes={routes} />
       </ul>
       {/* Nav item end */}
     </div>

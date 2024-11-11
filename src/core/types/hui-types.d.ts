@@ -57,5 +57,21 @@ declare global {
     mailingPassword: string;
   }
 
+  interface NewCategory {
+    name: string;
+    description: string;
+  }
+
+  interface Category {
+    categoryId: number;
+    businessId: string;
+    name: string;
+    description: string;
+    addedBy: string;
+    updatedBy: string;
+    dateAdded: string;
+    lastDateUpdated: string;
+  }
+
   type DataListItem = { value: string | number; name: string };
 }
