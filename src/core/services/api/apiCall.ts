@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { clearSessionAndLogout } from "../helpers";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 
@@ -82,6 +83,7 @@ export const apiCall = async ({
         };
       } else if (error?.response?.status === 401) {
         toast.error("Please logout and sign in again");
+        clearSessionAndLogout();
         return error?.response?.data;
       } else {
         return error?.response?.data;

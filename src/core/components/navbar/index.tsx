@@ -6,6 +6,10 @@ import { RiMoonFill, RiSunFill } from "react-icons/ri";
 import avatar from "assets/img/avatars/avatar4.png";
 import { useBusinessStore } from "core/services/stores/useBusinessStore";
 import { useCategoryStore } from "core/services/stores/useCategoryStore";
+import { useProductStore } from "core/services/stores/useProductStore";
+import useIdleTimer from "core/services/useIdleTimer";
+import toast from "react-hot-toast";
+import { useQuotationStore } from "core/services/stores/useQuotationStore";
 
 const Navbar = (props: {
   onOpenSidenav: () => void;
@@ -15,19 +19,31 @@ const Navbar = (props: {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
   const navigate = useNavigate();
+
   const resetBiz = useBusinessStore((store) => store.reset);
   const resetCategory = useCategoryStore((store) => store.reset);
+  const resetProducts = useProductStore((store) => store.reset);
+  const resetQuote = useQuotationStore((store) => store.reset);
+
   const user = useBusinessStore((store) => store.authData);
 
-  const logout = () => {
+  const logout = (isExpired: boolean = false) => {
     resetBiz();
     resetCategory();
+    resetProducts();
+    resetQuote();
 
     localStorage.removeItem("token");
     localStorage.clear();
 
+    if (isExpired) {
+      toast.error("You have been logged out automatically, due to inactivity.");
+    }
+
     navigate("/auth/sign-in");
   };
+
+  useIdleTimer({ timeout: 15 * 60 * 1000, onInactive: () => logout(true) });
 
   return (
     <nav className="hide-print sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-md bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">

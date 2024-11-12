@@ -12,6 +12,8 @@ import { Toaster } from "react-hot-toast";
 import Loader from "core/components/loader/Loader";
 import { useBusinessStore } from "core/services/stores/useBusinessStore";
 import { useCategoryStore } from "core/services/stores/useCategoryStore";
+import { useProductStore } from "core/services/stores/useProductStore";
+import { useQuotationStore } from "core/services/stores/useQuotationStore";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -24,10 +26,14 @@ const App = () => {
 
   const isBizLoading = useBusinessStore((store) => store.isLoading);
   const categoryLoading = useCategoryStore((store) => store.isLoading);
+  const productLoading = useProductStore((store) => store.isLoading);
+  const quoteLoading = useQuotationStore((store) => store.isLoading);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {(isBizLoading || categoryLoading) && <Loader />}
+      {(isBizLoading || categoryLoading || productLoading || quoteLoading) && (
+        <Loader />
+      )}
       <Router>
         <Toaster />
 

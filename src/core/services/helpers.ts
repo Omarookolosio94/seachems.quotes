@@ -50,6 +50,27 @@ export const formatCurrency = (value: any) => {
   return "₦ 0.00";
 };
 
+export const formatNumber = (value: any) => {
+  if (value === null || value === undefined || isNaN(value)) {
+    return "0";
+  }
+
+  let val: string | number = parseFloat(value);
+  if (isNaN(val)) {
+    return "0";
+  }
+
+  if (!String(value).includes(".")) {
+    return `${Number(val).toLocaleString("en-US")}`;
+  }
+
+  val = val.toFixed(2);
+  return `${Number(val).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
+};
+
 export const getDataFromSession = (name: string) => {
   try {
     const data: any = sessionStorage.getItem(name);
@@ -199,4 +220,53 @@ export const numbersOnly = (e: any) => {
   if (isNaN(e?.key) && e?.key !== "Backspace") {
     e.preventDefault();
   }
+};
+
+export const filterProductQuery = (
+  query: ProductQuery
+): Partial<ProductQuery> => {
+  const filteredQuery: any = {};
+
+  // Iterate through each key-value pair in the query object
+  Object.entries(query).forEach(([key, value]) => {
+    const typedKey = key as keyof ProductQuery;
+
+    // Only add to filteredQuery if the value is a non-empty string, a true boolean, or a number
+    if (
+      (typeof value === "string" && value !== "") ||
+      (typeof value === "boolean" && value === true) ||
+      typeof value === "number"
+    ) {
+      filteredQuery[typedKey] = value as ProductQuery[typeof typedKey];
+    }
+  });
+
+  return filteredQuery;
+};
+
+export const filterQuotationQuery = (
+  query: QuotationQuery
+): Partial<QuotationQuery> => {
+  const filteredQuery: any = {};
+
+  Object.entries(query).forEach(([key, value]) => {
+    const typedKey = key as keyof QuotationQuery;
+
+    if (
+      (typeof value === "string" && value !== "") ||
+      (typeof value === "boolean" && value === true) ||
+      typeof value === "number"
+    ) {
+      filteredQuery[typedKey] = value as QuotationQuery[typeof typedKey];
+    }
+  });
+
+  return filteredQuery;
+};
+
+export const clearSessionAndLogout = async () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  //isExpiredSession && localStorage.setItem('se', true);
+  window.location.assign("/");
 };

@@ -6,7 +6,13 @@ export const gallery =
 
 export const ORDER_STATUS = ["PROCESSING", "CONFIRMED", "CANCELLED"];
 
-export const WEB_ORDER_STATUS = ["PENDING","CONFIRMED", "PROCESSING", "CANCELLED" , "FULFILLED"];
+export const QUOTE_STATUS = [
+  "Draft",
+  "Pending",
+  "Cancelled",
+  "Invoiced",
+  "Closed",
+];
 
 export const PAYMENT_STATUS = ["PAID", "PRE_PAID", "UNPAID"];
 

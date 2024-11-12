@@ -35,9 +35,9 @@ export default function ResetPassword() {
   const resetPassword = async (e: any) => {
     e.preventDefault();
 
-    var status: boolean | any = await resetPasswordAction(resetForm);
+    var res = await resetPasswordAction(resetForm);
 
-    if (status) {
+    if (res.status) {
       setResetForm({
         email: "",
         password: "",

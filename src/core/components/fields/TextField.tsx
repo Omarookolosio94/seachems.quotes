@@ -19,6 +19,7 @@ function TextField(props: {
   value?: string | number;
   error?: string;
   placeholder?: string;
+  isRequired?: boolean;
 }) {
   const {
     name,
@@ -36,6 +37,8 @@ function TextField(props: {
     disabled,
     value,
     placeholder,
+    isRequired = false,
+    error = "",
   } = props;
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -56,7 +59,7 @@ function TextField(props: {
             variant === "auth" ? "ml-1.5 font-medium" : "ml-3 font-bold"
           }`}
         >
-          {label}
+          {label} {isRequired && <span className="text-red-500">*</span>}
         </label>
       )}{" "}
       <div className="flex flex-col gap-2 md:flex-row">
@@ -80,6 +83,11 @@ function TextField(props: {
           disabled={disabled}
           placeholder={placeholder}
         />
+      </div>
+      <div className="h-2">
+        {error && (
+          <span className="text-[12px] leading-none text-red-500">{error}</span>
+        )}
       </div>
     </div>
   );
