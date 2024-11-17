@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "core/components/fields/InputField";
 import { useBusinessStore } from "core/services/stores/useBusinessStore";
 import toast from "react-hot-toast";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export default function ResetPassword() {
     otp: "",
     password: "",
   });
+
+  const recaptcha = useRef(null);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -34,6 +37,12 @@ export default function ResetPassword() {
 
   const resetPassword = async (e: any) => {
     e.preventDefault();
+
+    const captchaValue = recaptcha.current.getValue()
+
+    if (!captchaValue) {
+      return toast.error('Please verify the reCAPTCHA!')
+    }
 
     var res = await resetPasswordAction(resetForm);
 
@@ -64,66 +73,73 @@ export default function ResetPassword() {
         </p>
         <form onSubmit={(e: any) => resetPassword(e)}>
           <InputField
-            label="Email*"
-            placeholder="business@mail.com"
-            id="email"
-            type="text"
-            name="email"
-            value={resetForm?.email}
-            onChange={(e: any) => handleChange(e)}
-            onFocus={() => {
-              if (errors?.email && errors?.email?.length > 0) {
-                updateError("Email");
-              }
-            }}
-            error={errors?.Email}
+              label="Email*"
+              placeholder="business@mail.com"
+              id="email"
+              type="text"
+              name="email"
+              value={resetForm?.email}
+              onChange={(e: any) => handleChange(e)}
+              onFocus={() => {
+                if (errors?.email && errors?.email?.length > 0) {
+                  updateError("Email");
+                }
+              }}
+              error={errors?.Email}
           />
 
           {/* Password */}
           <InputField
-            label="New Password*"
-            placeholder=""
-            id="newPassword"
-            type="password"
-            name="password"
-            value={resetForm?.password}
-            onChange={(e: any) => handleChange(e)}
-            onFocus={() => {
-              if (errors?.password && errors?.password?.length > 0) {
-                updateError("password");
-              }
-            }}
-            error={errors?.NewPassword}
+              label="New Password*"
+              placeholder=""
+              id="newPassword"
+              type="password"
+              name="password"
+              value={resetForm?.password}
+              onChange={(e: any) => handleChange(e)}
+              onFocus={() => {
+                if (errors?.password && errors?.password?.length > 0) {
+                  updateError("password");
+                }
+              }}
+              error={errors?.NewPassword}
           />
 
           {/* OTP */}
           <div className="flex items-center justify-between px-2">
             <button
-              type="button"
-              className="text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
-              onClick={() => getOtp()}
+                type="button"
+                className="text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
+                onClick={() => getOtp()}
             >
               Generate Otp?
             </button>
           </div>
 
           <InputField
-            label="Otp*"
-            id="otp"
-            placeholder=""
-            type="text"
-            name="otp"
-            value={resetForm?.otp}
-            onChange={(e: any) => handleChange(e)}
-            onFocus={() => {
-              if (errors?.otp && errors?.otp?.length > 0) {
-                updateError("Otp");
-              }
-            }}
-            error={errors?.otp}
+              label="Otp*"
+              id="otp"
+              placeholder=""
+              type="text"
+              name="otp"
+              value={resetForm?.otp}
+              onChange={(e: any) => handleChange(e)}
+              onFocus={() => {
+                if (errors?.otp && errors?.otp?.length > 0) {
+                  updateError("Otp");
+                }
+              }}
+              error={errors?.otp}
           />
 
-          <button className="linear mt-2 w-full rounded-md bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
+          <div className="mt-10 w-full">
+            <ReCAPTCHA
+                style={{width: "100%", margin: "10px 0"}}
+                sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY} ref={recaptcha}/>
+          </div>
+
+          <button
+              className="linear mt-2 w-full rounded-md bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
             Reset Password
           </button>
         </form>
@@ -134,8 +150,8 @@ export default function ResetPassword() {
               Set up a new business profile?
             </span>
             <Link
-              to="/auth/register"
-              className="ml-1 text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
+                to="/auth/register"
+                className="ml-1 text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
             >
               Create an account
             </Link>

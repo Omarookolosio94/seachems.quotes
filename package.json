@@ -29,6 +29,7 @@
     "react-apexcharts": "^1.4.0",
     "react-calendar": "^3.9.0",
     "react-dom": "^18.2.0",
+    "react-google-recaptcha": "^3.1.0",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.4.0",
     "react-notifications-component": "^4.0.1",
@@ -71,6 +72,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.6",
     "@types/react-calendar": "^3.5.2",
+    "@types/react-google-recaptcha": "^2.1.9",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-table": "^7.7.12",
     "@types/xlsx": "^0.0.36",
@@ -80,5 +82,5 @@
     "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.1.8"
   },
-  "proxy": "https://usewebeffects-001-site1.jtempurl.com/"
+  "proxy": "https://usewebeffects-001-site1.atempurl.com/"
 }
