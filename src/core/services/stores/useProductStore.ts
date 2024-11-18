@@ -106,7 +106,7 @@ export const useProductStore = create<State>()(
             set({ errors: res?.data, isLoading: false });
           } else {
             const updatedProducts = get().productPagination.items.map((prod) =>
-              prod.productId === productId ? { ...res?.data } : prod
+              prod?.productId === productId ? { ...res?.data } : prod
             );
 
             var singleProduct = get().product;
@@ -115,10 +115,10 @@ export const useProductStore = create<State>()(
               isLoading: false,
               productPagination: {
                 ...state.productPagination,
-                items: updatedProducts.length > 0 ? updatedProducts : [],
+                items: updatedProducts?.length > 0 ? updatedProducts : [],
               },
               product:
-                singleProduct.productId === productId
+                singleProduct?.productId === productId
                   ? { ...res?.data }
                   : singleProduct,
             }));
@@ -145,10 +145,10 @@ export const useProductStore = create<State>()(
               isLoading: false,
               productPagination: {
                 ...state.productPagination,
-                items: updatedProducts.length > 0 ? updatedProducts : [],
+                items: updatedProducts?.length > 0 ? updatedProducts : [],
               },
               product:
-                singleProduct.productId === productId
+                singleProduct?.productId === productId
                   ? { ...res?.data }
                   : singleProduct,
             }));

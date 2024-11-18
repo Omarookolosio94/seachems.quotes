@@ -116,7 +116,7 @@ export const useQuotationStore = create<State>()(
               isLoading: false,
               quotePagination: {
                 ...state.quotePagination,
-                items: updated.length > 0 ? updated : [],
+                items: updated?.length > 0 ? updated : [],
               },
             }));
           }
@@ -140,7 +140,7 @@ export const useQuotationStore = create<State>()(
               isLoading: false,
               quotePagination: {
                 ...state.quotePagination,
-                items: updated.length > 0 ? updated : [],
+                items: updated?.length > 0 ? updated : [],
               },
             }));
           }

@@ -59,11 +59,11 @@ export const useCategoryStore = create<State>()(
           } else {
             if (isUpdate) {
               const updatedCategory = get().categories.map((cat) =>
-                cat.categoryId === categoryId ? { ...res?.data } : cat
+                cat?.categoryId === categoryId ? { ...res?.data } : cat
               );
 
               set({
-                categories: updatedCategory.length > 0 ? updatedCategory : [],
+                categories: updatedCategory?.length > 0 ? updatedCategory : [],
                 isLoading: false,
               });
             } else {
@@ -85,7 +85,7 @@ export const useCategoryStore = create<State>()(
           if (res.status) {
             set({
               categories: get().categories.filter(
-                (cat) => cat.categoryId !== categoryId
+                (cat) => cat?.categoryId !== categoryId
               ),
             });
           }
