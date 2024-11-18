@@ -801,14 +801,18 @@ const Quotes = () => {
                       {singleProduct?.description?.length > 0 && (
                         <div className="mb-3 text-gray-700">
                           <span className="font-semibold ">Description: </span>
-                          <p>{singleProduct?.description}</p>
+                          <p className="whitespace-pre-wrap">
+                            {singleProduct?.description}
+                          </p>
                         </div>
                       )}
 
                       {singleProduct?.comments?.length > 0 && (
                         <div className="text-gray-700">
                           <span className="font-semibold">Note: </span>
-                          <p>{singleProduct?.comments}</p>
+                          <p className="whitespace-pre-wrap">
+                            {singleProduct?.comments}
+                          </p>
                         </div>
                       )}
                     </div>

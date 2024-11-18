@@ -372,7 +372,7 @@ const Products = () => {
                               Description:
                             </span>{" "}
                             <br />
-                            <span>
+                            <span className="whitespace-pre-wrap">
                               {product?.description ?? "no description"}
                             </span>
                           </div>
@@ -383,7 +383,7 @@ const Products = () => {
                               Comments:
                             </span>{" "}
                             <br />
-                            <span>{product?.comments}</span>
+                            <span className="whitespace-pre-wrap">{product?.comments}</span>
                           </div>
                         </li>
                       </ul>

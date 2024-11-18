@@ -39,6 +39,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    console.log(user);
     if (!user) {
       navigate(-1);
     } else {
@@ -189,7 +190,7 @@ const Dashboard = () => {
                                 Description:
                               </span>{" "}
                               <br />
-                              <span>
+                              <span className="whitespace-pre-wrap">
                                 {product?.description ?? "no description"}
                               </span>
                             </div>
@@ -200,7 +201,7 @@ const Dashboard = () => {
                                 Comments:
                               </span>{" "}
                               <br />
-                              <span>{product?.comments}</span>
+                              <span className="whitespace-pre-wrap">{product?.comments}</span>
                             </div>
                           </li>
                         </ul>

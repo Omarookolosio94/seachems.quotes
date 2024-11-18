@@ -26,8 +26,8 @@ export default function SignIn() {
 
         var res = await loginUser({email, password});
 
-        if (res.status) {
-            navigate("/admin");
+        if (res?.status) {
+            navigate("/admin/dashboard");
         }
     };
 
