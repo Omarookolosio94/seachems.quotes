@@ -169,7 +169,7 @@ const Products = () => {
             ...res?.data,
           }));
 
-          setDisplayedImg(res?.data?.gallery[0]?.url);
+          setDisplayedImg(res?.data?.images[0]?.url);
 
           setUpdateGalleryForm((state) => ({
             ...state,
@@ -254,7 +254,7 @@ const Products = () => {
                             : imgPlaceholder
                         }
                         alt={product?.sku}
-                        className="h-[50px] w-[50px] rounded-[5px]"
+                        className="h-[50px] w-[50px] rounded-[5px] object-cover"
                       />
                       <p>{product?.name}</p>
                     </div>
@@ -383,7 +383,9 @@ const Products = () => {
                               Comments:
                             </span>{" "}
                             <br />
-                            <span className="whitespace-pre-wrap">{product?.comments}</span>
+                            <span className="whitespace-pre-wrap">
+                              {product?.comments}
+                            </span>
                           </div>
                         </li>
                       </ul>
@@ -577,7 +579,7 @@ const Products = () => {
               onChange={setProductForm}
             />
 
-            <div className="mb-5 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2">
               {productForm &&
                 productForm?.images?.length > 0 &&
                 Array.from(productForm?.images)?.map(
@@ -586,13 +588,14 @@ const Products = () => {
                       <img
                         src={URL.createObjectURL(file)}
                         alt={`gallery${index}`}
+                        className="object-cover"
                       />
                     </div>
                   )
                 )}
             </div>
 
-            <div className="flex gap-3">
+            <div className="mt-5 flex gap-3">
               <Button
                 type="button"
                 onClick={() => {
@@ -738,7 +741,7 @@ const Products = () => {
 
       {openGallery && (
         <Modal
-          styling="w-4/6 p-5"
+          styling="w-full lg:w-4/6 p-5"
           onClose={() => {
             setOpenGallery(false);
             setSelected(null);
@@ -749,8 +752,8 @@ const Products = () => {
             }));
           }}
         >
-          <div className="mb-5 flex w-full flex-col-reverse gap-3 sm:flex-row">
-            <div className="flex w-full justify-center gap-5 sm:block sm:w-[80px]">
+          <div className="mb-5 flex w-full flex-col-reverse gap-3 lg:flex-row">
+            <div className="flex w-full justify-center gap-5 lg:w-[80px] lg:flex-col">
               {selected?.images?.length > 0
                 ? selected?.images?.map((pic) => (
                     <div
@@ -761,7 +764,7 @@ const Products = () => {
                       <img
                         src={pic?.url ?? imgPlaceholder}
                         alt={pic?.alt ?? selected?.sku}
-                        className="h-2/3 w-2/3"
+                        className="h-full w-full object-cover p-0"
                       />
                     </div>
                   ))
@@ -774,16 +777,14 @@ const Products = () => {
                       <img
                         src={imgPlaceholder}
                         alt={selected?.sku}
-                        className="h-2/3 w-2/3"
+                        className="h-full w-full object-cover p-0"
                       />
                     </div>
                   ))}
             </div>
 
-            <div className="flex h-[600px] w-full items-center justify-center overflow-y-scroll rounded-[4px] border bg-[#f5f5f5] py-5 sm:py-0">
-              <div className="flex items-center justify-center">
-                <img src={displayedImg} alt="" className="" />
-              </div>
+            <div className="flex h-[600px] w-full rounded-[4px] border bg-[#f5f5f5]">
+              <img src={displayedImg} alt="" className="cover h-full w-full" />
             </div>
           </div>
 

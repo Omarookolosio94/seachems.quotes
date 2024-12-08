@@ -19,17 +19,22 @@ function UploadField({
   const onFileChange = (e: any) => {
     const { name, files } = e?.target;
 
-    setError("");
+    setError(""); // Reset the error message
 
     if (files) {
-      var uploadedFiles: File[] = e.target?.files;
+      const uploadedFiles: File[] = Array.from(files); // Convert FileList to an array
 
-      if (uploadedFiles?.length > 0) {
-        onChange((state: any) => ({
-          ...state,
-          [name]: uploadedFiles,
-        }));
+      // Check if the uploaded files exceed the limit
+      if (uploadedFiles.length > 4) {
+        setError("You can only upload up to 4 files.");
+        return;
       }
+
+      // If the file count is valid, pass them to the parent component
+      onChange((state: any) => ({
+        ...state,
+        [name]: uploadedFiles,
+      }));
     }
   };
 
@@ -39,11 +44,11 @@ function UploadField({
         <label htmlFor={name} className="text-brandgray mb-2 block text-[14px]">
           {label} {isRequired && <span className="text-red-500">*</span>}
         </label>
-      )}{" "}
+      )}
       <div>
         <label
           htmlFor={name}
-          className="border-brandgray text-brandgray mt-2 flex h-12 w-full items-center justify-between rounded-[5px] border border-[1px] bg-white p-3 text-sm outline-none "
+          className="border-brandgray text-brandgray mt-2 flex h-12 w-full items-center justify-between rounded-[5px] border border-[1px] bg-white p-3 text-sm outline-none"
         >
           <span>Upload image</span>
           <FiCamera />
@@ -57,6 +62,7 @@ function UploadField({
           multiple={true}
         />
       </div>
+      {/* Display error message if any */}
       <span className="text-[14px] text-red-500">{inputError}</span>
     </div>
   );
